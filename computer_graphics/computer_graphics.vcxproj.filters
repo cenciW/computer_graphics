@@ -16,6 +16,9 @@
     <Filter Include="Arquivos de Origem\02.Ficha">
       <UniqueIdentifier>{7d2f8ec8-bbb7-47d2-95c4-ca14a15246d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Fibonacci">
+      <UniqueIdentifier>{d9988ea5-304e-4046-afdc-3dacf60c404f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ex2.txt">
@@ -28,6 +31,9 @@
     </ClCompile>
     <ClCompile Include="form.c">
       <Filter>Arquivos de Origem\02.Ficha</Filter>
+    </ClCompile>
+    <ClCompile Include="golden_spira.c">
+      <Filter>Arquivos de Origem\Fibonacci</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

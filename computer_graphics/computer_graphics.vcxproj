@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="form.c" />
+    <ClCompile Include="golden_spira.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
