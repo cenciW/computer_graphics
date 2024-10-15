@@ -2,180 +2,148 @@
 #include <stdio.h>
 #include <gl/glut.h>
 #include "form.h"
-#define N 10
+#define N 100
+
 
 // Array of pointers to form objects
 Form a[N];
 Form f;
 
 struct form {
-    float x, y;             // initial point of the form
-    float xSize, ySize;     // sides 
+	int type;
+	float x, y;             // initial point of the form
+	float xSize, ySize;     // sides 
+	float r, g, b;          // color components
 };
 
 // Counter variable
 int counter = 0;
 
-// Function to generate random forms
-void generateRandomForms() {
-    int i;
-    //randomize the start position
-    for (i = 0; i < N; i++) {
-        if (a[i] == NULL) {
-            float x = (float)rand() / RAND_MAX;
-            x = sqrt(x);
-            float y = (float)rand() / RAND_MAX;
-            //y = y;
-            float xSize = (float)rand() / RAND_MAX;
-            float ySize = (float)rand() / RAND_MAX;
-            xSize = xSize / 2;
 
-            a[i] = newForm(x, y, xSize, ySize);
-        }
-    }
-}
-
-void generateFibonacciFigure() {
-    Form fibonacci[N];  // Array to store Fibonacci forms
-    int i;
-
-    for (i = 0; i < N; i++) {
-        // Generate each form using Fibonacci logic here
-        // Example placeholder logic (you can customize this):
-        fibonacci[i] = newForm(0.0f, 0.0f, 1.0f, 1.0f);  // Example: create a new form
-
-        // You can add more logic to set the size or position based on Fibonacci numbers
-    }
-
-    // Further drawing or processing logic goes here
-}
-
+int windowY = 900;
+int windowX = 900;
 
 // Function to display forms
 void display() {
-    int i;
+	glClear(GL_COLOR_BUFFER_BIT);
 
-    glClear(GL_COLOR_BUFFER_BIT);
-    
+	// Draw the Y-axis and X-axis (vertical and horizontal line through the center)
+	glColor3f(1.0, 1.0, 1.0); // Set color to red for the X-axis
+	glBegin(GL_LINES);
+	glVertex2f(-1.0, 0.0); // Left side of the window
+	glVertex2f(1.0, 0.0);  // Right side of the window
+	glVertex2f(0.0, -1.0); // Bottom of the window
+	glVertex2f(0.0, 1.0);  // Top of the window
+	glEnd();
 
-    // Draw the Y-axis and X-axis (vertical and horizontal line through the center)
-    glColor3f(1.0, 1.0, 1.0); // Set color to red for the X-axis
-    glBegin(GL_LINES);
-        glVertex2f(-1.0, 0.0); // Left side of the window
-        glVertex2f(1.0, 0.0);  // Right side of the window
-        glVertex2f(0.0, -1.0); // Bottom of the window
-        glVertex2f(0.0, 1.0);  // Top of the window
-    glEnd();
+	// Draw the forms
+	for (int i = 0; i < N; i++) {
+		drawForm(a[i]);
+	}
 
-    // Draw the forms
-    for (i = 0; i < N; i++) {
-        if (a[i] != NULL) {
-            // Generate random RGB values for the color
-            float r = (float)rand() / RAND_MAX;
-            float g = (float)rand() / RAND_MAX;
-            float b = (float)rand() / RAND_MAX;
+	glFlush();
 
-            // Set the color for the outline
-            glColor3f(r, g, b);
-
-            // Draw the outline of the form as a line loop
-            glBegin(GL_LINE_LOOP);
-            glVertex2f(a[i]->x, a[i]->y);
-            glVertex2f(a[i]->x, a[i]->y + a[i]->ySize);
-            glVertex2f(a[i]->x + a[i]->xSize, a[i]->y + a[i]->ySize);
-            glVertex2f(a[i]->x + a[i]->xSize, a[i]->y);
-            glEnd();
-
-            // Set the color for the fill
-            glColor3f(r, g, b);
-
-            // Draw the form as a polygon
-            glBegin(GL_POLYGON);
-            glVertex2f(a[i]->x, a[i]->y);
-            glVertex2f(a[i]->x, a[i]->y + a[i]->ySize);
-            glVertex2f(a[i]->x + a[i]->xSize, a[i]->y + a[i]->ySize);
-            glVertex2f(a[i]->x + a[i]->xSize, a[i]->y);
-            glEnd();
-        }
-    }
-
-    glFlush();
-
-    // Increment and display the counter value
-    counter++;
-    printf("Counter: %d\n", counter);
+	// Increment and display the counter value
+	counter++;
+	printf("Counter: %d\n", counter);
 }
 
-void init() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+Form createRandomForm() {
+	Form f;
+	switch (rand() % 5)
+	{
+	case 0:
+		f = newRectangle(((float)rand() / RAND_MAX * windowX),
+				((float)rand() / RAND_MAX * windowY),
+			((float)rand() / RAND_MAX) * 50 - 1,
+			((float)rand() / RAND_MAX) * 50 - 1);
+		break;
+	case 1:
+		f = newSquare(((float)rand() / RAND_MAX * windowX),
+					((float)rand() / RAND_MAX * windowY),
+			((float)rand() / RAND_MAX)*50 - 1);
+			
+		break;
+	case 2:
+		f = newTriangleIsos(((float)rand() / RAND_MAX * windowX),
+				((float)rand() / RAND_MAX * windowY),
+			((float)rand() / RAND_MAX) * 50 - 1,
+			((float)rand() / RAND_MAX) * 50 - 1);
+		break;
+	case 3:
+		f = newLine(((float)rand() / RAND_MAX * windowX),
+				((float)rand() / RAND_MAX * windowY),
+				rand() % windowX,
+				rand() % windowY);
+		break;
+	case 4:
+		f = newCircle(((float)rand() / RAND_MAX * windowX),
+				((float)rand() / RAND_MAX * windowY),
+			((float)rand() / RAND_MAX) * 50 - 1);
+		break;
+	default:
+		f = newRectangle(((float)rand() / RAND_MAX * windowX),
+				((float)rand() / RAND_MAX * windowY),
+			((float)rand() / RAND_MAX) * 50 - 1,
+			((float)rand() / RAND_MAX) * 50 - 1);
+		break;
+	}
+	setBackgroundColor(f, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
 
-    glColor3f(1.0, 1.0, 1.0);
+	return f;
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    //glOrtho(1024.0, -1024.0, 1024.0, -1024.0, 1024.0, -1024.0);
-    //tem apenas left and right
-    gluOrtho2D(1024.0, -1024.0, 1024.0, -1024.0/*, 1024.0, -1024.0*/);
 }
+
+void init(int width, int height) {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0, width, height, 0.0, -1.0, 1.0);
+}
+
+void reshape(int w, int h) {
+	glViewport(0, 0, w, h);
+	init(w, h);
+	//glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(0.0, (GLdouble)w, 0.0, (GLdouble)h);
+	windowX = w;
+	windowY = h;
+}
+
+void configOpenGL() {
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitWindowSize(windowX, windowY);
+	glutInitWindowPosition(0, 0);
+	glutCreateWindow("Tela de figuras malucas");
+	init(windowX, windowY);
+	glutDisplayFunc(display);
+	glutReshapeFunc(reshape);
+	glutMainLoop();
+}
+
+
+
 
 int main(int argc, char** argv) {
-    int i;
-
-    // Initialize GLUT and create a window
-    glutInit(&argc, argv);
-    //glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    //glutInitWindowSize(1024, 1024);
-    init();
-    glutCreateWindow("Window");
-
-    //// Simple example: create one form, print it and delete it at the end
-    //Form* f = newForm(0, 0, 5, 5);  // Note: Form* to indicate a pointer
-    //printfForm(f);
-    //deleteForm(f);
-
-    // Initialize array of pointers to forms to NULL
-    for (i = 0; i < N; i++)
-        a[i] = NULL;
-
-    // Generate random forms
-    generateRandomForms();
-
-    // Print the content of the array
-    for (i = 0; i < N; i++) {
-        if (a[i] != NULL) {
-            printfForm(a[i]);
-        }
-    }
-
-   
-    // Draw the forms before starting the graphics
-    display();
-
-    // Register display callback function
-    glutDisplayFunc(display);
+	for (int i = 0; i < N; i++) {
+		a[i] = NULL;
+	}
 
 
-    // Update a form and display the new positions
-    printf("Updating form: ");
-    printfForm(a[2]);
-    updateForm(a[2], 1.0, 1.0);
-    printfForm(a[2]);
-    updateForm(a[2], 1.0, 1.0);
-    printfForm(a[2]);
-    updateForm(a[2], 0.0, -4.0);
-    printfForm(a[2]);
+	srand(time(NULL));
+	//generateRandomForms(a, 70);
 
-    // Start the GLUT main loop
-    glutMainLoop();
+	for (int i = 0; i < N; i++) {
+		a[i] = createRandomForm();
+		if (a[i] != NULL) {
+			printf("Figura %d: ", i);
+			printfForm(a[i]);
+			printf("\n");
+		}
+	}
 
-    // Delete forms when done
-    for (i = 0; i < N; i++) {
-        if (a[i] != NULL) {
-            deleteForm(a[i]);
-            a[i] = NULL;
-        }
-    }
+	glutInit(&argc, argv);
+	configOpenGL();
 
-
-    return 0;
+	return 0;
 }

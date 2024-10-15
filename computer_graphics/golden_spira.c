@@ -2,13 +2,13 @@
 //#include <math.h>
 //
 //#define PI 3.14159265
-//#define N 50
+//#define N 5
 //int x_atual = 0;  // urrent x position
 //int y_atual = 0;  // Current y position
 //
 //// Tamanho da janela
-//float sc_x = 500;
-//float sc_y = 500;
+//float sc_x = 5;
+//float sc_y = 5;
 //
 //// Proporção Áurea (aproximada)
 ////#define PHI 1.61803398875
@@ -42,15 +42,15 @@
 //	return fib;
 //}
 //
-//// Função para desenhar o arco
-////void drawArc(float x, float y, float r) {
-////    glBegin(GL_LINE_LOOP);
-////    for (float i = 0; i < PI / 2; i += 0.01) {
-////        glVertex2f((cos(i) + x) * r, (sin(i) + y) * r);
-////    }
-////    glEnd();
-////    glFlush();
-////}
+// //Função para desenhar o arco
+//void drawArc(float x, float y, float r) {
+//    glBegin(GL_LINE_LOOP);
+//    for (float i = 0; i < PI / 2; i += 0.01) {
+//        glVertex2f((cos(i) + x) * r, (sin(i) + y) * r);
+//    }
+//    glEnd();
+//    glFlush();
+//}
 //
 //
 //void drawFib() {
