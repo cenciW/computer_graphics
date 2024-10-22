@@ -7,7 +7,7 @@
 
 
 Form figs[N];
-int cont;
+int counter;
 int windowX = 500;
 int windowY = 500;
 
@@ -90,9 +90,9 @@ void displayForms() {
 
     generateRandomFigures(figs, 90);
 
-    cont++;
+    counter++;
 
-    printf("Contador: %d\n", cont);
+    printf("Contador: %d\n", counter);
 
     for (int i = 0; i < N; i++) {
         if (figs[i] != NULL) {
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 
     srand(time(NULL));
     generateRandomFigures(figs, 70);
-    cont = 0;
+    counter = 0;
 
 
     for (int i = 0; i < N; i++) {
