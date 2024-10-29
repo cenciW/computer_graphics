@@ -35,10 +35,16 @@
     <ClCompile Include="golden_spira.c">
       <Filter>Arquivos de Origem\Fibonacci</Filter>
     </ClCompile>
+    <ClCompile Include="DBForms.c">
+      <Filter>Arquivos de Origem\02.Ficha</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="form.h">
       <Filter>Arquivos de Origem\02.Ficha</Filter>
+    </ClInclude>
+    <ClInclude Include="DBForms.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

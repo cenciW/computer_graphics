@@ -52,6 +52,10 @@ Form newCircle(float x, float y, float radius) {
     return newForm(x, y, radius, radius, CIRCLE);
 }
 
+Form newTriangleEq(float x, float y, float side) {
+    return newForm(x, y, side, side, EQ_TRIANGLE);
+}
+
 void setBackgroundColor(Form f, float r, float g, float b) {
     f->r = r;
     f->g = g;
@@ -106,22 +110,27 @@ void drawRectangle(Form f) {
 
 void drawTriangle(Form f) {
     glColor3f(f->r, f->g, f->b);
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(f->x - (f->xSize / 2), f->y - f->ySize);
-    glVertex2f(f->x, f->y);
-    glVertex2f(f->x + (f->xSize / 2), f->y - f->ySize);
+    glBegin(GL_TRIANGLES);
+
+    // Vértices do triângulo isósceles
+    glVertex2f(f->x, f->y - f->ySize);                     // Vértice inferior (meio, embaixo)
+    glVertex2f(f->x - (f->xSize / 2), f->y);               // Vértice superior esquerdo
+    glVertex2f(f->x + (f->xSize / 2), f->y);               // Vértice superior direito
+
     glEnd();
 
-
+    // Desenha o contorno
     glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
     glBegin(GL_LINE_LOOP);
-    glVertex2f(f->x - (f->xSize / 2), f->y - f->ySize);
-    glVertex2f(f->x, f->y);
-    glVertex2f(f->x + (f->xSize / 2), f->y - f->ySize);
+    glVertex2f(f->x, f->y - f->ySize);                     // Vértice inferior
+    glVertex2f(f->x - (f->xSize / 2), f->y);               // Vértice superior esquerdo
+    glVertex2f(f->x + (f->xSize / 2), f->y);               // Vértice superior direito
     glEnd();
 
     glFlush();
 }
+
+
 
 void drawCircle(Form f, float radius, float faces) {
 
@@ -143,6 +152,30 @@ void drawCircle(Form f, float radius, float faces) {
 
 }
 
+void drawEquilateralTriangle(Form f) {
+    float halfSide = f->xSize / 2;
+    float height = (sqrt(3) / 2) * f->xSize;
+
+    glColor3f(f->r, f->g, f->b);
+    glBegin(GL_TRIANGLES);
+
+    // Inverted Y coordinates for proper orientation
+    glVertex2f(f->x - halfSide, f->y + height);  // Base esquerda
+    glVertex2f(f->x + halfSide, f->y + height);  // Base direita
+    glVertex2f(f->x, f->y);                      // Vértice inferior
+
+    glEnd();
+
+    // Desenha o contorno
+    glColor3f((float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(f->x - halfSide, f->y + height);
+    glVertex2f(f->x + halfSide, f->y + height);
+    glVertex2f(f->x, f->y);
+    glEnd();
+
+    glFlush();
+}
 
 void drawForm(Form f) {
 
@@ -161,6 +194,9 @@ void drawForm(Form f) {
         break;
     case CIRCLE:
         drawCircle(f, f->xSize / 2, 50);
+        break;
+    case EQ_TRIANGLE:
+        drawEquilateralTriangle(f);
         break;
     }
 }

@@ -18,27 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="ex2.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="DBForms.c" />
-    <ClCompile Include="form.c" />
-    <ClCompile Include="golden_spira.c" />
-    <ClCompile Include="main.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DBForms.h" />
-    <ClInclude Include="form.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignore" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b372ee71-20b9-4594-a221-73b58dc5185b}</ProjectGuid>
-    <RootNamespace>computergraphics</RootNamespace>
+    <ProjectGuid>{f997680b-656a-4cf3-8bbb-c39574efaf11}</ProjectGuid>
+    <RootNamespace>Ficha06KeyboardGraphicalFormCG</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,6 +126,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\DBForms.c" />
+    <ClCompile Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\form.c" />
+    <ClCompile Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\DBForms.h" />
+    <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\form.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

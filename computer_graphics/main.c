@@ -1,85 +1,111 @@
 #include "form.h"
+#include "DBForms.h"
 #include <stdlib.h>
-#include <gl/glut.h>
+#include <GL/glut.h>
 #include <math.h>
 
-#define N 10
 
-
-Form figs[N];
 int counter;
 int windowX = 500;
 int windowY = 500;
 
-void generateRandomFigures(Form* figs, float percentual) {
-
-    for (int i = 0; i < N; i++) {
-        if (figs[i] != NULL) {
-            deleteForm(figs[i]);
-            figs[i] = NULL;
-        }
-    }
-
-    for (int i = 0; i < N; i++) {
-
-        int figureType = (rand() % 5);
-
-        switch (figureType) {
-        case 0:
-            figs[i] = newRectangle(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        case 1:
-            figs[i] = newTriangleIso(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        case 2:
-            figs[i] = newSquare(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        case 3:
-            //Hexagon
-            figs[i] = newHexagon(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        case 4:
-            figs[i] = newCircle(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        default:
-            figs[i] = newRectangle(
-                ((float)rand() / RAND_MAX) * windowX - 1,
-                ((float)rand() / RAND_MAX) * windowY - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1,
-                ((float)rand() / RAND_MAX) * 50 - 1);
-            break;
-        }
-        setBackgroundColor(figs[i], (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
 
 
-    }
+// delete a random figure
+//void delete(int button, int state, int x, int y) {
+//    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+//        printf("-> LEFT button pressed!\n");
+//        deleteForm(figs[(int)rand() / N)]);
+//    }
+//    
+//}
 
-}
+
+//void generateRandomFiguresXY(Form* figs, float percentual, float x, float y) {
+//
+//    for (int i = 0; i < N; i++) {
+//        if (figs[i] != NULL) {
+//            deleteForm(figs[i]);
+//            figs[i] = NULL;
+//        }
+//    }
+//
+//    for (int i = 0; i < N; i++) {
+//
+//        int figureType = (rand() % 5);
+//
+//        switch (figureType) {
+//        case 0:
+//            figs[i] = newRectangle(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        case 1:
+//            figs[i] = newTriangleIso(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        case 2:
+//            figs[i] = newSquare(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        case 3:
+//            //Hexagon
+//            figs[i] = newHexagon(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        case 4:
+//            figs[i] = newCircle(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        default:
+//            figs[i] = newRectangle(
+//                x,
+//                y,
+//                ((float)rand() / RAND_MAX) * 50 - 1,
+//                ((float)rand() / RAND_MAX) * 50 - 1);
+//            break;
+//        }
+//        setBackgroundColor(figs[i], (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
+//    }
+//
+//}
 
 void mouseClick(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		printf("Clicou na posicao (%d, %d)\n", x, y);
-        generateRandomFigures(figs, 100);
-		glutPostRedisplay();
-    }
+    printf("Clik in a mouse button... Window (X,Y) = (%i,%i)\n", x, y);
+    
+    	y = windowY - y;
+    
+    	printf("World (X, Y) = (% i, % i)\n", x, y);
+    
+    	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    		printf("-> LEFT button pressed!\n");
+            Form f = createRandomForm(windowX);
+
+            setBackgroundColor(f, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX, (float)rand() / RAND_MAX);
+
+            if (!insertDBForm(createRandomForm(windowX))) {
+                printf("Memory full.");
+                deleteForm(f);
+            }
+    	}
+
+        if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+            printf("-> RIGHT button pressed!\n");
+            deleteRandomDBForm();
+        }
+
 }
 
 
@@ -88,17 +114,13 @@ void displayForms() {
     glClear(GL_COLOR_BUFFER_BIT);
 
 
-    generateRandomFigures(figs, 90);
+    //generateRandomFigures(figs, 90);
 
     counter++;
 
-    printf("Contador: %d\n", counter);
+    printf("Counter: %d\n", counter);
 
-    for (int i = 0; i < N; i++) {
-        if (figs[i] != NULL) {
-            drawForm(figs[i]);
-        }
-    }
+    drawDBForms();
 }
 
 void init(int width, int height) {
@@ -116,7 +138,7 @@ void setupOpenGL() {
     glutInitDisplayMode(GLUT_SINGLE);
     glutInitWindowSize(windowX, windowY);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("Janela para figs");
+    glutCreateWindow("Window to Random Forms");
     init(windowX, windowY);
     glutDisplayFunc(displayForms);
     glutReshapeFunc(reShape);
@@ -125,22 +147,20 @@ void setupOpenGL() {
 }
 
 int main(int argc, char** argv) {
-    for (int i = 0; i < N; i++) {
-        figs[i] = NULL;
-    }
+    
 
     srand(time(NULL));
-    generateRandomFigures(figs, 70);
+
+    initDBForms(10);
+
+    /*generateRandomFigures(figs, 70);*/
     counter = 0;
 
+    //populateDBForms(windowX);
+    printDBForms();
 
-    for (int i = 0; i < N; i++) {
-        if (figs[i] != NULL) {
-            printf("Figura %d: ", i);
-            printfForm(figs[i]);
-            printf("\n");
-        }
-    }
+
+    
 
     glutInit(&argc, argv);
     setupOpenGL();
