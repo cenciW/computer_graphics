@@ -135,6 +135,9 @@
     <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\DBForms.h" />
     <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\form.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\computer_graphics\.gitignore" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
