@@ -35,6 +35,9 @@
     <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\form.h">
       <Filter>Arquivos de Origem\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\materials_luiz\05-GraphicalForm-NextWeekIntrodution\GraphicalForm\main.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\computer_graphics\.gitignore" />
